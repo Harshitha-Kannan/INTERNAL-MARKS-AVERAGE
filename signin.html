@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sign In</title>
+</head>
+<body>
+
+<h2>INTERNAL ASSESSMENT RECORDS - SIGN IN</h2>
+
+<form id="signInForm">
+<input type="text" id="username" placeholder="Username" required><br><br>
+<input type="password" id="password" placeholder="Password" required><br><br>
+
+<label><input type="radio" name="role" value="Student" required> Student</label><br>
+<label><input type="radio" name="role" value="Professor"> Professor</label><br>
+<label><input type="radio" name="role" value="Class Incharge"> Class Incharge</label><br><br>
+
+<button type="button" onclick="signIn()">Sign In</button>
+<p id="errorMsg" style="color:red;"></p>
+</form>
+
+<script>
+function signIn() {
+    const role = document.querySelector('input[name="role"]:checked');
+
+    if (!role) {
+        document.getElementById("errorMsg").innerText = "Select a role!";
+        return;
+    }
+
+    if (role.value === "Student") {
+        window.location.href = "student.html";
+    } 
+    else if (role.value === "Professor") {
+        window.location.href = "professor.html";
+    } 
+    else {
+        window.location.href = "classincharge.html";
+    }
+}
+</script>
+
+</body>
+</html>

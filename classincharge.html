@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Average Calculator</title>
+</head>
+<body>
+
+<h2>Average Calculator</h2>
+
+<form id="averageForm">
+<input type="number" id="s1" required><br><br>
+<input type="number" id="s2" required><br><br>
+<input type="number" id="s3" required><br><br>
+<input type="number" id="s4" required><br><br>
+<input type="number" id="s5" required><br><br>
+
+<button type="submit">Calculate</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+document.getElementById("averageForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const marks = [+s1.value,+s2.value,+s3.value,+s4.value,+s5.value];
+    const avg = marks.reduce((a,b)=>a+b,0)/marks.length;
+
+    document.getElementById("result").innerText = "Average: " + avg.toFixed(2);
+
+    await fetch("http://localhost:5000/api/average", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({subjectMarks:marks, average:avg})
+    });
+});
+</script>
+
+</body>
+</html>

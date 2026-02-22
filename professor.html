@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Internal Marks Record</title>
+</head>
+<body>
+
+<h2>Internal Marks Entry</h2>
+
+<form id="marksForm">
+
+<input type="text" id="rollno" placeholder="Roll No" required><br><br>
+<input type="text" id="name" placeholder="Name" required><br><br>
+<input type="text" id="subject" placeholder="Subject" required><br><br>
+
+<h4>Part A Marks</h4>
+<input type="number" id="a1">
+<input type="number" id="a2">
+<input type="number" id="a3">
+<input type="number" id="a4">
+<input type="number" id="a5"><br><br>
+
+<h4>Part B Marks</h4>
+<input type="number" id="b1">
+<input type="number" id="b2">
+<input type="number" id="b3">
+<input type="number" id="b4">
+<input type="number" id="b5"><br><br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<script>
+document.getElementById("marksForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const partA = [
+        +a1.value, +a2.value, +a3.value, +a4.value, +a5.value
+    ];
+
+    const partB = [
+        +b1.value, +b2.value, +b3.value, +b4.value, +b5.value
+    ];
+
+    const total = [...partA, ...partB].reduce((a,b)=>a+b,0);
+
+    const response = await fetch("http://localhost:5000/api/student-record", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            rollno: rollno.value,
+            name: name.value,
+            subject: subject.value,
+            partA,
+            partB,
+            total
+        })
+    });
+
+    if(response.ok){
+        alert("Record Saved!");
+        this.reset();
+    } else {
+        alert("Error saving record");
+    }
+});
+</script>
+
+</body>
+</html>
